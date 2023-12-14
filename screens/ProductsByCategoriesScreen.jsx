@@ -1,17 +1,30 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import products_data from "../data/products_data.json";
+import ProductItem from "../components/ProductItem";
+import { useEffect, useState } from "react";
+import Header from "../components/Header";
 
-const ProductsByCategoriesScreen = () => {
+const ProductsByCategoriesScreen = ({ category, onReturnHome }) => {
+  const [productsByCategory, setProductsByCategory] = useState([]);
+
+  useEffect(() => {
+    const productsFilterByCategory = products_data.filter(
+      (product) => product.category === category
+    );
+    setProductsByCategory(productsFilterByCategory);
+  }, [category]);
+
+  const renderProductItem = ({ item }) => <ProductItem product={item} />;
   return (
-    <View style={styles.container}>
-      <Text>Categorías</Text>
-    </View>
+    <>
+      <Header title="Productos" onReturnHome={onReturnHome} />
+      <FlatList
+        data={productsByCategory}
+        renderItem={renderProductItem}
+        keyExtractor={(item) => item.id}
+      />
+    </>
   );
 };
 
 export default ProductsByCategoriesScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

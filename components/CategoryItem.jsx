@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
   text: {
     textTransform: "capitalize",
     fontSize: 15,
+    fontFamily: "Outfit-SemiBold",
   },
 });
