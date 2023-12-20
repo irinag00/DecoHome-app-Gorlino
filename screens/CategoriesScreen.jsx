@@ -29,16 +29,14 @@ const CategoriesScreen = ({ onSelectCategory, onSelectProductId }) => {
             keyExtractor={(item) => item}
           ></FlatList>
         </View>
-        <View>
-          <FlatList
-            data={products_data}
-            renderItem={renderProductItem}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            columnWrapperStyle={{ justifyContent: "space-between" }}
-            showsVerticalScrollIndicator={false}
-          ></FlatList>
-        </View>
+        <FlatList
+          data={products_data}
+          renderItem={renderProductItem}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          showsVerticalScrollIndicator={false}
+        ></FlatList>
       </View>
     </>
   );

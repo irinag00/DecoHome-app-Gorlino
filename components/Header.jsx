@@ -1,9 +1,21 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Platform,
+  StatusBar,
+} from "react-native";
 import { colors } from "../global/colors";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 const Header = () => {
   return (
     <View style={styles.container}>
+      {/* <View style={styles.buttonIcon}>
+        <Pressable onPress={null}>
+          <Ionicons name="arrow-back-sharp" size={28} color="black" />
+        </Pressable>
+      </View> */}
       <View>
         <Text style={styles.headerTitle}>Bienvenido a</Text>
         <Text style={styles.headerNameShop}>Deco Home</Text>
@@ -24,9 +36,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 20,
     flexDirection: "row",
-    marginTop: 20,
-    marginBottom: 10,
     justifyContent: "space-between",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   headerTitle: {
     fontSize: 25,
