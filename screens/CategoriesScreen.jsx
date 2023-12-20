@@ -3,24 +3,18 @@ import categories_data from "../data/categories_data.json";
 import products_data from "../data/products_data.json";
 import CategoryItem from "../components/CategoryItem";
 import Header from "../components/Header";
-import Search from "../components/Search";
 import ProductItem from "../components/ProductItem";
-const CategoriesScreen = ({ onSelectCategory, onSelectProductId }) => {
+const CategoriesScreen = ({ navigation }) => {
   const renderCategoryItem = ({ item }) => (
-    <CategoryItem
-      category={item}
-      onSelectCategory={onSelectCategory}
-    ></CategoryItem>
+    <CategoryItem category={item} navigation={navigation}></CategoryItem>
   );
 
   const renderProductItem = ({ item }) => (
-    <ProductItem product={item} onSelectProductId={onSelectProductId} />
+    <ProductItem product={item} navigation={navigation} />
   );
-
   return (
     <>
       <View style={styles.container}>
-        <Header />
         <View>
           <FlatList
             horizontal

@@ -13,9 +13,12 @@ import { useEffect, useState } from "react";
 import { colors } from "../global/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
-const ProductDetailScreen = ({ productId }) => {
+const ProductDetailScreen = ({ route }) => {
   const [productSelected, setProductSelected] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+
+  const productId = route.params;
+
   useEffect(() => {
     const productFound = products_data.find(
       (product) => product.id === productId
@@ -31,30 +34,6 @@ const ProductDetailScreen = ({ productId }) => {
       ) : (
         <ScrollView>
           <View style={styles.container}>
-            <View
-              style={{
-                flexDirection: "row",
-                marginHorizontal: 16,
-                justifyContent: "space-between",
-              }}
-            >
-              <Pressable onPress={null}>
-                <Ionicons
-                  name="arrow-back-sharp"
-                  size={30}
-                  color="white"
-                  style={{ top: 30 }}
-                />
-              </Pressable>
-              <Pressable onPress={null}>
-                <MaterialCommunityIcons
-                  name="cart"
-                  size={28}
-                  color="white"
-                  style={{ top: 30 }}
-                />
-              </Pressable>
-            </View>
             <View style={styles.containerDetail}>
               <View style={styles.containerDetailImage}>
                 <Image
@@ -105,9 +84,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.main,
   },
   containerDetail: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.backgroundApp,
     flex: 1,
-    marginTop: 210,
+    marginTop: 180,
     borderTopLeftRadius: 56,
     borderTopRightRadius: 56,
     alignItems: "center",
@@ -143,7 +122,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   rowTitleAndPrice: {
-    marginTop: 150,
+    marginTop: 160,
     marginLeft: 20,
     flexDirection: "row",
     justifyContent: "space-between",

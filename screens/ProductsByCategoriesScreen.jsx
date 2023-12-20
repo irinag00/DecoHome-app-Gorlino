@@ -6,9 +6,11 @@ import Header from "../components/Header";
 import Search from "../components/Search";
 import { colors } from "../global/colors";
 
-const ProductsByCategoriesScreen = ({ category, onSelectProductId }) => {
+const ProductsByCategoriesScreen = ({ navigation, route }) => {
   const [productsByCategory, setProductsByCategory] = useState([]);
   const [search, setSearch] = useState("");
+
+  const { category } = route.params;
 
   useEffect(() => {
     const productsFilterByCategory = products_data.filter(
@@ -21,7 +23,7 @@ const ProductsByCategoriesScreen = ({ category, onSelectProductId }) => {
   }, [category, search]);
 
   const renderProductItem = ({ item }) => (
-    <ProductItem product={item} onSelectProductId={onSelectProductId} />
+    <ProductItem product={item} navigation={navigation} />
   );
 
   const onSearch = (search) => {
@@ -29,7 +31,6 @@ const ProductsByCategoriesScreen = ({ category, onSelectProductId }) => {
   };
   return (
     <>
-      <Header />
       <Search onSearchHandler={onSearch} />
       <View style={styles.containerCategory}>
         <Text style={styles.categoryName}>{category}</Text>

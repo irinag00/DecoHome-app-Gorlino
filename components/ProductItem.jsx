@@ -1,10 +1,10 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { colors } from "../global/colors";
 
-const ProductItem = ({ product, onSelectProductId }) => {
+const ProductItem = ({ product, navigation }) => {
   return (
     <TouchableOpacity
-      onPress={() => onSelectProductId(product.id)}
+      onPress={() => navigation.navigate("DetailProduct", product.id)}
       style={styles.containerProduct}
     >
       <Image
@@ -22,7 +22,7 @@ export default ProductItem;
 
 const styles = StyleSheet.create({
   containerProduct: {
-    backgroundColor: colors.backgroundProduct,
+    backgroundColor: colors.white,
     shadowColor: "#000",
     shadowOffset: {
       height: 10,

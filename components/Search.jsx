@@ -61,7 +61,7 @@ export default Search;
 
 const styles = StyleSheet.create({
   searchContainer: {
-    backgroundColor: colors.backgroundProduct,
+    backgroundColor: colors.white,
     flexDirection: "row",
     justifyContent: "space-around",
     paddingVertical: 16,

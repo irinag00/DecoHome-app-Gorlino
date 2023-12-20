@@ -8,9 +8,11 @@ import {
 import CardProduct from "./CardProduct";
 import { colors } from "../global/colors";
 
-const CategoryItem = ({ category, onSelectCategory }) => {
+const CategoryItem = ({ category, navigation }) => {
   return (
-    <TouchableOpacity onPress={() => onSelectCategory(category)}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Products", { category })}
+    >
       <CardProduct
         style={{
           ...styles.cardContainer,

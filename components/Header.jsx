@@ -8,21 +8,38 @@ import {
 } from "react-native";
 import { colors } from "../global/colors";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
-const Header = () => {
+const Header = ({ title, navigation }) => {
   return (
-    <View style={styles.container}>
-      {/* <View style={styles.buttonIcon}>
-        <Pressable onPress={null}>
-          <Ionicons name="arrow-back-sharp" size={28} color="black" />
-        </Pressable>
-      </View> */}
-      <View>
-        <Text style={styles.headerTitle}>Bienvenido a</Text>
-        <Text style={styles.headerNameShop}>Deco Home</Text>
-      </View>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor:
+          title === "DetailProduct" ? colors.main : colors.backgroundApp,
+      }}
+    >
+      {title === "Categories" ? (
+        <View>
+          <Text style={styles.headerTitle}>Bienvenido a</Text>
+          <Text style={styles.headerNameShop}>Deco Home</Text>
+        </View>
+      ) : (
+        <View style={styles.buttonIcon}>
+          <Pressable onPress={navigation.goBack}>
+            {title === "DetailProduct" ? (
+              <Ionicons name="arrow-back-sharp" size={28} color="white" />
+            ) : (
+              <Ionicons name="arrow-back-sharp" size={28} color="black" />
+            )}
+          </Pressable>
+        </View>
+      )}
       <View style={styles.buttonIcon}>
         <Pressable onPress={null}>
-          <MaterialCommunityIcons name="cart" size={28} color="black" />
+          {title === "DetailProduct" ? (
+            <MaterialCommunityIcons name="cart" size={28} color="white" />
+          ) : (
+            <MaterialCommunityIcons name="cart" size={28} color="black" />
+          )}
         </Pressable>
       </View>
     </View>
@@ -33,7 +50,6 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
     paddingHorizontal: 20,
     flexDirection: "row",
     justifyContent: "space-between",

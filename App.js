@@ -4,6 +4,7 @@ import ProductsByCategoriesScreen from "./screens/ProductsByCategoriesScreen";
 import ProductDetailScreen from "./screens/ProductDetailScreen";
 import { useFonts } from "expo-font";
 import { useState } from "react";
+import Navigator from "./navigation/Navigator";
 
 export default function App() {
   const [categorySelected, setCategorySelected] = useState("");
@@ -26,7 +27,8 @@ export default function App() {
   };
   return (
     <>
-      {productIdSelected ? (
+      <Navigator />
+      {/* {productIdSelected ? (
         <ProductDetailScreen productId={productIdSelected} />
       ) : categorySelected ? (
         <ProductsByCategoriesScreen
@@ -38,7 +40,7 @@ export default function App() {
           onSelectCategory={onSelectCategory}
           onSelectProductId={onSelectProductId}
         />
-      )}
+      )} */}
     </>
   );
 }
