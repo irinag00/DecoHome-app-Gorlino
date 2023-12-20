@@ -31,12 +31,6 @@ const Search = ({ onSearchHandler }) => {
   return (
     <>
       <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          onChangeText={setSearch}
-          placeholder="Buscar productos..."
-          value={search}
-        />
         <TouchableOpacity
           onPress={() => {
             onSearchHandlerEvent(search);
@@ -44,6 +38,12 @@ const Search = ({ onSearchHandler }) => {
         >
           <Ionicons name="ios-search" size={24} color={colors.main} />
         </TouchableOpacity>
+        <TextInput
+          style={styles.searchInput}
+          onChangeText={setSearch}
+          placeholder="Buscar productos..."
+          value={search}
+        />
         <TouchableOpacity onPress={onResetSearch}>
           <Entypo name="cross" size={24} color={colors.lightPink} />
         </TouchableOpacity>
@@ -61,12 +61,28 @@ export default Search;
 
 const styles = StyleSheet.create({
   searchContainer: {
+    backgroundColor: "#f8f9fa",
     flexDirection: "row",
     justifyContent: "space-around",
-    padding: 10,
+    paddingVertical: 16,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    marginVertical: 16,
+    marginHorizontal: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 10,
+      height: 10,
+    },
+    elevation: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    borderRadius: 10,
   },
   searchInput: {
     width: "80%",
+    paddingLeft: 8,
+    fontSize: 16,
   },
   errorMessageContainer: {
     flexDirection: "row",

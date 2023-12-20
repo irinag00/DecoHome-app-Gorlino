@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function App() {
   const [categorySelected, setCategorySelected] = useState("");
+  const [productIdSelected, setProductIdSelected] = useState(null);
 
   const [fontsLoaded] = useFonts({
     "Outfit-Bold": require("./assets/fonts/Outfit-Bold.ttf"),
@@ -17,16 +18,10 @@ export default function App() {
   const onSelectCategory = (category) => {
     setCategorySelected(category);
   };
-  const onReturnHome = () => {
-    setCategorySelected("");
-  };
   return (
     <>
       {categorySelected ? (
-        <ProductsByCategoriesScreen
-          category={categorySelected}
-          returnHomeHandler={onReturnHome}
-        />
+        <ProductsByCategoriesScreen category={categorySelected} />
       ) : (
         <CategoriesScreen onSelectCategory={onSelectCategory} />
       )}

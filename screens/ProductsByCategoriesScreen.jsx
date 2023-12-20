@@ -4,8 +4,9 @@ import ProductItem from "../components/ProductItem";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Search from "../components/Search";
+import { colors } from "../global/colors";
 
-const ProductsByCategoriesScreen = ({ category, onReturnHome }) => {
+const ProductsByCategoriesScreen = ({ category }) => {
   const [productsByCategory, setProductsByCategory] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -26,15 +27,33 @@ const ProductsByCategoriesScreen = ({ category, onReturnHome }) => {
   };
   return (
     <>
-      <Header title="Productos" onReturnHome={onReturnHome} />
+      <Header />
       <Search onSearchHandler={onSearch} />
+      <View>
+        <Text style={styles.categoryName}>{category}</Text>
+      </View>
+
       <FlatList
         data={productsByCategory}
         renderItem={renderProductItem}
         keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        showsVerticalScrollIndicator={false}
       />
     </>
   );
 };
 
 export default ProductsByCategoriesScreen;
+
+const styles = StyleSheet.create({
+  categoryName: {
+    color: colors.green,
+    fontSize: 18,
+    fontWeight: "700",
+    fontFamily: "Outfit-SemiBold",
+    textAlign: "center",
+    textTransform: "capitalize",
+  },
+});
