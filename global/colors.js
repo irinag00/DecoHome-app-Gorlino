@@ -1,5 +1,8 @@
 export const colors = {
-  main: "#6b9080",
-  green: "#84a98c",
-  lightGreen: "#F6FFF8",
+  main: "#1a936f",
+  green: "#114b5f",
+  lightGreen: "#c7f9cc",
+  backgroundProduct: "#f8f9fa",
+  white: "#fff",
+  black: "#000",
 };

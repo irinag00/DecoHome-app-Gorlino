@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { colors } from "../global/colors";
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 const Header = () => {
   return (
     <View style={styles.container}>
@@ -10,7 +10,7 @@ const Header = () => {
       </View>
       <View style={styles.buttonIcon}>
         <Pressable onPress={null}>
-          <AntDesign name="shoppingcart" size={28} color="black" />
+          <MaterialCommunityIcons name="cart" size={28} color="black" />
         </Pressable>
       </View>
     </View>
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   headerTitle: {
-    fontWeight: "bold",
     fontSize: 25,
     fontFamily: "Outfit-Bold",
     paddingTop: 30,
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
   },
   headerNameShop: {
     fontSize: 38,
-    fontWeight: "bold",
     fontFamily: "Outfit-Bold",
     color: colors.main,
   },

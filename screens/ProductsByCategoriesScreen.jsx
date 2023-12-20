@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import Search from "../components/Search";
 import { colors } from "../global/colors";
 
-const ProductsByCategoriesScreen = ({ category }) => {
+const ProductsByCategoriesScreen = ({ category, onSelectProductId }) => {
   const [productsByCategory, setProductsByCategory] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -20,7 +20,9 @@ const ProductsByCategoriesScreen = ({ category }) => {
     setProductsByCategory(productsFiltered);
   }, [category, search]);
 
-  const renderProductItem = ({ item }) => <ProductItem product={item} />;
+  const renderProductItem = ({ item }) => (
+    <ProductItem product={item} onSelectProductId={onSelectProductId} />
+  );
 
   const onSearch = (search) => {
     setSearch(search);
@@ -29,10 +31,9 @@ const ProductsByCategoriesScreen = ({ category }) => {
     <>
       <Header />
       <Search onSearchHandler={onSearch} />
-      <View>
+      <View style={styles.containerCategory}>
         <Text style={styles.categoryName}>{category}</Text>
       </View>
-
       <FlatList
         data={productsByCategory}
         renderItem={renderProductItem}
@@ -40,6 +41,7 @@ const ProductsByCategoriesScreen = ({ category }) => {
         numColumns={2}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: colors.main }}
       />
     </>
   );
@@ -49,11 +51,17 @@ export default ProductsByCategoriesScreen;
 
 const styles = StyleSheet.create({
   categoryName: {
-    color: colors.green,
-    fontSize: 18,
+    color: colors.white,
+    fontSize: 22,
     fontWeight: "700",
-    fontFamily: "Outfit-SemiBold",
+    fontFamily: "Outfit-Bold",
     textAlign: "center",
     textTransform: "capitalize",
+    marginVertical: 20,
+  },
+  containerCategory: {
+    backgroundColor: colors.main,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
   },
 });

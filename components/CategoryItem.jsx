@@ -14,7 +14,6 @@ const CategoryItem = ({ category, onSelectCategory }) => {
       <CardProduct
         style={{
           ...styles.cardContainer,
-          // backgroundColor: category === null ? colors.main : "#fff",
         }}
       >
         <Text style={styles.text}>{category}</Text>
@@ -38,5 +37,6 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     fontSize: 15,
     fontFamily: "Outfit-SemiBold",
+    color: colors.white,
   },
 });

@@ -1,6 +1,7 @@
 import { ActivityIndicator } from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import ProductsByCategoriesScreen from "./screens/ProductsByCategoriesScreen";
+import ProductDetailScreen from "./screens/ProductDetailScreen";
 import { useFonts } from "expo-font";
 import { useState } from "react";
 
@@ -17,13 +18,26 @@ export default function App() {
   if (!fontsLoaded) return <ActivityIndicator />;
   const onSelectCategory = (category) => {
     setCategorySelected(category);
+    console.log(category);
+  };
+  const onSelectProductId = (productId) => {
+    setProductIdSelected(productId);
+    console.log(productId);
   };
   return (
     <>
-      {categorySelected ? (
-        <ProductsByCategoriesScreen category={categorySelected} />
+      {productIdSelected ? (
+        <ProductDetailScreen productId={productIdSelected} />
+      ) : categorySelected ? (
+        <ProductsByCategoriesScreen
+          category={categorySelected}
+          onSelectProductId={onSelectProductId}
+        />
       ) : (
-        <CategoriesScreen onSelectCategory={onSelectCategory} />
+        <CategoriesScreen
+          onSelectCategory={onSelectCategory}
+          onSelectProductId={onSelectProductId}
+        />
       )}
     </>
   );
