@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import categories_data from "../data/categories_data.json";
-import products_data from "../data/products_data.json";
 import CategoryItem from "../components/CategoryItem";
-import Header from "../components/Header";
 import ProductItem from "../components/ProductItem";
+import { useSelector } from "react-redux";
 const CategoriesScreen = ({ navigation }) => {
+  const categories = useSelector((state) => state.shopReducer.categories);
+  const products = useSelector((state) => state.shopReducer.products);
   const renderCategoryItem = ({ item }) => (
     <CategoryItem category={item} navigation={navigation}></CategoryItem>
   );
@@ -18,13 +18,13 @@ const CategoriesScreen = ({ navigation }) => {
         <View>
           <FlatList
             horizontal
-            data={categories_data}
+            data={categories}
             renderItem={renderCategoryItem}
             keyExtractor={(item) => item}
           ></FlatList>
         </View>
         <FlatList
-          data={products_data}
+          data={products}
           renderItem={renderProductItem}
           keyExtractor={(item) => item.id}
           numColumns={2}

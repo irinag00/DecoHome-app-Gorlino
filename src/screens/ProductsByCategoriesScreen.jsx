@@ -1,21 +1,20 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import products_data from "../data/products_data.json";
 import ProductItem from "../components/ProductItem";
 import { useEffect, useState } from "react";
-import Header from "../components/Header";
 import Search from "../components/Search";
 import { colors } from "../global/colors";
+import { useSelector } from "react-redux";
 
 const ProductsByCategoriesScreen = ({ navigation, route }) => {
   const [productsByCategory, setProductsByCategory] = useState([]);
   const [search, setSearch] = useState("");
 
-  const { category } = route.params;
+  const category = useSelector((state) => state.shopReducer.categorySelected);
+  const productsFilterByCategory = useSelector(
+    (state) => state.shopReducer.productsFilteredByCategory
+  );
 
   useEffect(() => {
-    const productsFilterByCategory = products_data.filter(
-      (product) => product.category === category
-    );
     const productsFiltered = productsFilterByCategory.filter((product) =>
       product.title.toLowerCase().includes(search.toLowerCase())
     );
