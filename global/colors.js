@@ -5,4 +5,5 @@ export const colors = {
   backgroundApp: "#f2f2f2",
   white: "#fff",
   black: "#000",
+  gray: "#6c757d",
 };

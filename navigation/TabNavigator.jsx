@@ -2,8 +2,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ShopNavigator from "./ShopNavigator";
 import CartNavigator from "./CartNavigator";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../global/colors";
+import OrdersNavigator from "./OrdersNavigator";
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
@@ -20,7 +21,20 @@ const TabNavigator = () => {
               <MaterialCommunityIcons
                 name="home"
                 size={24}
-                color={focused ? colors.main : colors.black}
+                color={focused ? colors.main : colors.gray}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="OrdersStack"
+          component={OrdersNavigator}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <MaterialIcons
+                name="shopping-bag"
+                size={24}
+                color={focused ? colors.main : colors.gray}
               />
             ),
           }}
@@ -33,7 +47,7 @@ const TabNavigator = () => {
               <MaterialCommunityIcons
                 name="cart"
                 size={24}
-                color={focused ? colors.main : colors.black}
+                color={focused ? colors.main : colors.gray}
               />
             ),
           }}

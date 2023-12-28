@@ -33,15 +33,6 @@ const Header = ({ title, navigation }) => {
           </Pressable>
         </View>
       )}
-      <View style={styles.buttonIcon}>
-        <Pressable onPress={null}>
-          {title === "DetailProduct" ? (
-            <MaterialCommunityIcons name="cart" size={28} color="white" />
-          ) : (
-            <MaterialCommunityIcons name="cart" size={28} color="black" />
-          )}
-        </Pressable>
-      </View>
     </View>
   );
 };

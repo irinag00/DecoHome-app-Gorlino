@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   containerDetail: {
     backgroundColor: colors.backgroundApp,
     flex: 1,
-    marginTop: 180,
+    marginTop: 150,
     borderTopLeftRadius: 56,
     borderTopRightRadius: 56,
     alignItems: "center",
