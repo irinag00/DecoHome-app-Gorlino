@@ -1,6 +1,6 @@
 import { ActivityIndicator } from "react-native";
 import { useFonts } from "expo-font";
-import TabNavigator from "./navigation/TabNavigator";
+import TabNavigator from "./src/navigation/TabNavigator";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
