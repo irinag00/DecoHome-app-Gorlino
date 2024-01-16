@@ -1,24 +1,40 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import ProductItem from "../components/ProductItem";
 import { useEffect, useState } from "react";
 import Search from "../components/Search";
 import { colors } from "../global/colors";
 import { useSelector } from "react-redux";
+import { useGetProductsByCategoryQuery } from "../services/shopServices";
 
 const ProductsByCategoriesScreen = ({ navigation, route }) => {
   const [productsByCategory, setProductsByCategory] = useState([]);
   const [search, setSearch] = useState("");
 
   const category = useSelector((state) => state.shopReducer.categorySelected);
-  const productsFilterByCategory = useSelector(
-    (state) => state.shopReducer.productsFilteredByCategory
-  );
+  // const productsFilterByCategory = useSelector(
+  //   (state) => state.shopReducer.productsFilteredByCategory
+  // );
+
+  const {
+    data: productsByCategoryData,
+    isLoading: productsByCategoryLoading,
+    error: productsByCategoryError,
+  } = useGetProductsByCategoryQuery(category);
 
   useEffect(() => {
-    const productsFiltered = productsFilterByCategory.filter((product) =>
-      product.title.toLowerCase().includes(search.toLowerCase())
-    );
-    setProductsByCategory(productsFiltered);
+    if (!productsByCategoryLoading) {
+      const productsValues = Object.values(productsByCategoryData);
+      const productsFiltered = productsValues.filter((product) =>
+        product.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setProductsByCategory(productsFiltered);
+    }
   }, [category, search]);
 
   const renderProductItem = ({ item }) => (
@@ -30,19 +46,25 @@ const ProductsByCategoriesScreen = ({ navigation, route }) => {
   };
   return (
     <>
-      <Search onSearchHandler={onSearch} />
-      <View style={styles.containerCategory}>
-        <Text style={styles.categoryName}>{category}</Text>
-      </View>
-      <FlatList
-        data={productsByCategory}
-        renderItem={renderProductItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-        showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: colors.main }}
-      />
+      {productsByCategoryLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <>
+          <Search onSearchHandler={onSearch} />
+          <View style={styles.containerCategory}>
+            <Text style={styles.categoryName}>{category}</Text>
+          </View>
+          <FlatList
+            data={productsByCategory}
+            renderItem={renderProductItem}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            columnWrapperStyle={{ justifyContent: "space-between" }}
+            showsVerticalScrollIndicator={false}
+            style={{ backgroundColor: colors.main }}
+          />
+        </>
+      )}
     </>
   );
 };

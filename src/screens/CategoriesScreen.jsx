@@ -2,9 +2,23 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import CategoryItem from "../components/CategoryItem";
 import ProductItem from "../components/ProductItem";
 import { useSelector } from "react-redux";
+import {
+  useGetCategoriesQuery,
+  useGetProductsQuery,
+} from "../services/shopServices";
 const CategoriesScreen = ({ navigation }) => {
-  const categories = useSelector((state) => state.shopReducer.categories);
-  const products = useSelector((state) => state.shopReducer.products);
+  // const categories = useSelector((state) => state.shopReducer.categories);
+  const {
+    data: categoriesData,
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useGetCategoriesQuery();
+  // const products = useSelector((state) => state.shopReducer.products);
+  const {
+    data: productsData,
+    isLoading: productsLoading,
+    error: productsError,
+  } = useGetProductsQuery();
   const renderCategoryItem = ({ item }) => (
     <CategoryItem category={item} navigation={navigation}></CategoryItem>
   );
@@ -18,13 +32,14 @@ const CategoriesScreen = ({ navigation }) => {
         <View>
           <FlatList
             horizontal
-            data={categories}
+            data={categoriesData}
             renderItem={renderCategoryItem}
-            keyExtractor={(item) => item}
+            keyExtractor={(item) => item.name}
+            showsHorizontalScrollIndicator={false}
           ></FlatList>
         </View>
         <FlatList
-          data={products}
+          data={productsData}
           renderItem={renderProductItem}
           keyExtractor={(item) => item.id}
           numColumns={2}

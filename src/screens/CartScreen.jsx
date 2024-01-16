@@ -28,7 +28,10 @@ const CartScreen = () => {
         renderItem={renderCartItem}
         keyExtractor={(item) => item.id}
       ></FlatList>
-      <Text style={styles.totalPrice}>Total: ${total}</Text>
+      <View style={styles.totalPriceContainer}>
+        <Text style={styles.totalPrice}> Total </Text>
+        <Text style={styles.totalPrice}> ${total}</Text>
+      </View>
       <View style={{ alignItems: "center" }}>
         <TouchableOpacity style={styles.confirmButton}>
           <Text style={styles.textConfirm}>Confirmar compra</Text>
@@ -44,6 +47,10 @@ const styles = StyleSheet.create({
   cartContainer: {
     flex: 1,
     marginTop: 10,
+  },
+  totalPriceContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   totalPrice: {
     fontSize: 20,

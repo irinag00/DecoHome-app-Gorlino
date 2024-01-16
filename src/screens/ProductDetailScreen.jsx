@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import products_data from "../data/products_data.json";
+import { useGetProductsQuery } from "../services/shopServices";
 import { useEffect, useState } from "react";
 import { colors } from "../global/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -18,9 +18,14 @@ const ProductDetailScreen = ({ route }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const productId = route.params;
+  const {
+    data: productsData,
+    isLoading: productsLoading,
+    error: productsError,
+  } = useGetProductsQuery();
 
   useEffect(() => {
-    const productFound = products_data.find(
+    const productFound = productsData.find(
       (product) => product.id === productId
     );
     setProductSelected(productFound);
@@ -38,7 +43,7 @@ const ProductDetailScreen = ({ route }) => {
               <View style={styles.containerDetailImage}>
                 <Image
                   style={styles.productImage}
-                  source={{ uri: productSelected.images[1] }}
+                  source={{ uri: productSelected.thumbnail }}
                 />
               </View>
               <View style={styles.rowTitleAndPrice}>
@@ -84,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.main,
   },
   containerDetail: {
-    backgroundColor: colors.backgroundApp,
+    backgroundColor: colors.white,
     flex: 1,
     marginTop: 150,
     borderTopLeftRadius: 56,
@@ -102,6 +107,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "contain",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
   productTitle: {
     fontSize: 28,
@@ -117,7 +124,7 @@ const styles = StyleSheet.create({
   },
   priceProduct: {
     fontFamily: "Outfit-Bold",
-    fontSize: 26,
+    fontSize: 23,
     color: colors.white,
     marginLeft: 15,
   },
@@ -130,8 +137,8 @@ const styles = StyleSheet.create({
   },
   priceTag: {
     backgroundColor: colors.main,
-    marginLeft: 75,
-    width: 100,
+    marginLeft: 45,
+    width: 130,
     height: 50,
     borderTopLeftRadius: 25,
     borderBottomLeftRadius: 25,

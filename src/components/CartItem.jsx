@@ -22,7 +22,7 @@ const CartItem = ({ item }) => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity onPress={null}>
+      <TouchableOpacity onPress={null} style={styles.trashCart}>
         <Feather name="trash-2" size={24} color="black" />
       </TouchableOpacity>
     </CardProduct>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   trashCart: {
-    marginLeft: "auto",
+    alignItems: "stretch",
   },
   cartTitle: {
     fontFamily: "Outfit-Bold",
