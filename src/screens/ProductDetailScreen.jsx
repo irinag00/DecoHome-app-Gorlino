@@ -12,10 +12,13 @@ import { useGetProductsQuery } from "../services/shopServices";
 import { useEffect, useState } from "react";
 import { colors } from "../global/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cartSlice";
 
 const ProductDetailScreen = ({ route }) => {
   const [productSelected, setProductSelected] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const productId = route.params;
   const {
@@ -31,6 +34,10 @@ const ProductDetailScreen = ({ route }) => {
     setProductSelected(productFound);
     setIsLoading(false);
   }, [productId]);
+
+  const onAddToCart = () => {
+    dispatch(addToCart({ ...productSelected, quantity: 1 }));
+  };
 
   return (
     <>
@@ -62,7 +69,7 @@ const ProductDetailScreen = ({ route }) => {
                   {productSelected.description}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.buttonBuy}>
+              <TouchableOpacity style={styles.buttonBuy} onPress={onAddToCart}>
                 <Text
                   style={{
                     fontSize: 18,
@@ -70,7 +77,7 @@ const ProductDetailScreen = ({ route }) => {
                     fontFamily: "Outfit-Bold",
                   }}
                 >
-                  Comprar
+                  Añadir al carrito
                 </Text>
               </TouchableOpacity>
             </View>
