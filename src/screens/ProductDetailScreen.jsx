@@ -14,11 +14,13 @@ import { colors } from "../global/colors";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cartSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductDetailScreen = ({ route }) => {
   const [productSelected, setProductSelected] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const productId = route.params;
   const {
@@ -37,6 +39,7 @@ const ProductDetailScreen = ({ route }) => {
 
   const onAddToCart = () => {
     dispatch(addToCart({ ...productSelected, quantity: 1 }));
+    navigation.navigate("CartStack");
   };
 
   return (
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.main,
   },
   containerDetail: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.backgroundApp,
     flex: 1,
     marginTop: 150,
     borderTopLeftRadius: 56,
@@ -114,11 +117,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "contain",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
+    borderRadius: 25,
   },
   productTitle: {
-    fontSize: 28,
+    fontSize: 24,
     textTransform: "capitalize",
     fontFamily: "Outfit-Bold",
     width: "60%",
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   rowTitleAndPrice: {
-    marginTop: 160,
+    marginTop: 180,
     marginLeft: 20,
     flexDirection: "row",
     justifyContent: "space-between",

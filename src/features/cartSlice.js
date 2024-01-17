@@ -7,6 +7,7 @@ export const cartSlice = createSlice({
     updatedAt: Date.now().toLocaleString(),
     total: 0,
     productsCart: [],
+    cartItemCount: 0,
   },
   reducers: {
     addToCart: (state, action) => {
@@ -20,6 +21,7 @@ export const cartSlice = createSlice({
           0
         );
         state.total = total;
+        state.cartItemCount += action.payload.quantity;
         state = {
           ...state,
           total,
@@ -38,7 +40,7 @@ export const cartSlice = createSlice({
           0
         );
         state.total = total;
-
+        state.cartItemCount += action.payload.quantity;
         state = {
           ...state,
           productsCart: productsUpdated,
@@ -47,7 +49,27 @@ export const cartSlice = createSlice({
         };
       }
     },
-    removeToCart: (state, action) => {},
+    removeToCart: (state, action) => {
+      const productsUpdated = state.productsCart.map((item) => {
+        if (item.id === action.payload.id) {
+          item.quantity -= action.payload.quantity;
+          return item;
+        }
+        return item;
+      });
+      const total = productsUpdated.reduce(
+        (acc, current) => (acc += current.price * current.quantity),
+        0
+      );
+      state.total = total;
+      state.cartItemCount -= action.payload.quantity;
+      state = {
+        ...state,
+        productsCart: productsUpdated,
+        total,
+        updatedAt: Date.now().toLocaleString(),
+      };
+    },
   },
 });
 export const { addToCart, removeToCart } = cartSlice.actions;

@@ -13,14 +13,6 @@ import { useSelector } from "react-redux";
 import { usePostOrderMutation } from "../services/shopServices";
 
 const CartScreen = () => {
-  // const [total, setTotal] = useState();
-  // useEffect(() => {
-  //   const totalCart = cart_data.reduce(
-  //     (acc, currentItem) => (acc += currentItem.price * currentItem.quantity),
-  //     0
-  //   );
-  //   setTotal(totalCart);
-  // }, []);
   const cartProducts = useSelector((state) => state.cartReducer.productsCart);
   const total = useSelector((state) => state.cartReducer.total);
   const [triggerPost, result] = usePostOrderMutation();
@@ -61,19 +53,20 @@ const styles = StyleSheet.create({
   totalPriceContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
+    marginTop: 10,
   },
   totalPrice: {
     fontSize: 20,
     fontFamily: "Outfit-Bold",
     textAlign: "right",
     marginRight: 20,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   confirmButton: {
     backgroundColor: colors.main,
     padding: 10,
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10,
     borderRadius: 18,
     paddingVertical: 18,
