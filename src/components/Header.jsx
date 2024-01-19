@@ -7,7 +7,7 @@ import {
   StatusBar,
 } from "react-native";
 import { colors } from "../global/colors";
-import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 const Header = ({ title, navigation }) => {
   return (
     <View
@@ -24,13 +24,15 @@ const Header = ({ title, navigation }) => {
         </View>
       ) : (
         <View style={styles.buttonIcon}>
-          <Pressable onPress={navigation.goBack}>
-            {title === "DetailProduct" ? (
-              <Ionicons name="arrow-back-sharp" size={28} color="white" />
-            ) : (
-              <Ionicons name="arrow-back-sharp" size={28} color="black" />
-            )}
-          </Pressable>
+          {title != "SignUp" && title != "Login" ? (
+            <Pressable onPress={navigation.goBack}>
+              {title === "DetailProduct" ? (
+                <Ionicons name="arrow-back-sharp" size={28} color="white" />
+              ) : (
+                <Ionicons name="arrow-back-sharp" size={28} color="black" />
+              )}
+            </Pressable>
+          ) : null}
         </View>
       )}
     </View>
@@ -59,5 +61,10 @@ const styles = StyleSheet.create({
   },
   buttonIcon: {
     marginTop: 30,
+  },
+  titleLoginAndSignUp: {
+    fontSize: 25,
+    fontFamily: "Outfit-Bold",
+    marginBottom: 20,
   },
 });

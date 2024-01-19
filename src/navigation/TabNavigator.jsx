@@ -1,4 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ShopNavigator from "./ShopNavigator";
 import CartNavigator from "./CartNavigator";
@@ -12,58 +11,56 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   const cartItemCount = useSelector((state) => state.cartReducer.cartItemCount);
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{ headerShown: false, tabBarShowLabel: false }}
-      >
-        <Tab.Screen
-          name="ShopStack"
-          component={ShopNavigator}
-          options={{
-            tabBarIcon: ({ focused }) => (
+    <Tab.Navigator
+      screenOptions={{ headerShown: false, tabBarShowLabel: false }}
+    >
+      <Tab.Screen
+        name="ShopStack"
+        component={ShopNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name="home"
+              size={24}
+              color={focused ? colors.main : colors.gray}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="OrdersStack"
+        component={OrdersNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <MaterialIcons
+              name="shopping-bag"
+              size={24}
+              color={focused ? colors.main : colors.gray}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="CartStack"
+        component={CartNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
               <MaterialCommunityIcons
-                name="home"
+                name="cart"
                 size={24}
                 color={focused ? colors.main : colors.gray}
               />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="OrdersStack"
-          component={OrdersNavigator}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <MaterialIcons
-                name="shopping-bag"
-                size={24}
-                color={focused ? colors.main : colors.gray}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="CartStack"
-          component={CartNavigator}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <View>
-                <MaterialCommunityIcons
-                  name="cart"
-                  size={24}
-                  color={focused ? colors.main : colors.gray}
-                />
-                {cartItemCount > 0 && (
-                  <View style={styles.badgeContainer}>
-                    <Text style={styles.badgeText}>{cartItemCount}</Text>
-                  </View>
-                )}
-              </View>
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+              {cartItemCount > 0 && (
+                <View style={styles.badgeContainer}>
+                  <Text style={styles.badgeText}>{cartItemCount}</Text>
+                </View>
+              )}
+            </View>
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
