@@ -2,9 +2,15 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { colors } from "../global/colors";
 import { useDispatch } from "react-redux";
 import { setProductIdSelected } from "../features/shopSlice";
-
+import { useNavigation } from "@react-navigation/native";
+import { addToCart } from "../features/cartSlice";
 const ProductItem = ({ product, navigation }) => {
   const dispatch = useDispatch();
+
+  const onAddToCart = () => {
+    dispatch(addToCart({ ...product, quantity: 1 }));
+    navigation.navigate("CartStack");
+  };
 
   return (
     <TouchableOpacity
@@ -25,9 +31,11 @@ const ProductItem = ({ product, navigation }) => {
         <Text style={styles.priceProductItem}>$ {product.price}</Text>
         <Text style={styles.titleProductItem}>{product.title}</Text>
       </View>
-      {/* <TouchableOpacity>
-        <Text>Añadir al carrito</Text>
-      </TouchableOpacity> */}
+      <View style={styles.addToCartBtn}>
+        <TouchableOpacity onPress={onAddToCart}>
+          <Text style={styles.addToCartText}>Añadir al carrito</Text>
+        </TouchableOpacity>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -75,5 +83,18 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginVertical: 5,
     marginHorizontal: 5,
+  },
+  addToCartBtn: {
+    marginTop: 5,
+    height: 30,
+    borderRadius: 20,
+    backgroundColor: colors.lightGreen,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  addToCartText: {
+    fontFamily: "Outfit-Bold",
+    color: colors.black,
+    fontSize: 12,
   },
 });
