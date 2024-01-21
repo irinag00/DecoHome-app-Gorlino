@@ -2,11 +2,12 @@ import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { colors } from "../global/colors";
 
-const Input = ({ label, isSecuryEntry = false, error = "" }) => {
+const Input = ({ label, isSecuryEntry = false, error = "", onChange }) => {
   const [input, setInput] = useState();
 
   const onHandleChangeText = (text) => {
     setInput(text);
+    onChange(text);
   };
   return (
     <View style={styles.inputContainer}>
@@ -27,15 +28,14 @@ export default Input;
 const styles = StyleSheet.create({
   inputContainer: {
     justifyContent: "center",
-    width: "75%",
     marginTop: 10,
+    width: "70%",
   },
   input: {
     borderRadius: 10,
-    width: "90%",
     backgroundColor: "#ebebeb",
     color: colors.black,
-    padding: 8,
+    padding: 10,
   },
   label: {
     fontFamily: "Outfit-Bold",

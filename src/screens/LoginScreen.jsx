@@ -7,23 +7,22 @@ import {
 } from "react-native";
 import Input from "../components/Input";
 import { colors } from "../global/colors";
-import { useState, useEffect } from "react";
-import { useSignUpMutation } from "../services/authServices";
+import { useEffect, useState } from "react";
+import { useLoginMutation } from "../services/authServices";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/authSlice";
 
-const SignUpScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [triggerLogin, result] = useLoginMutation();
   const dispach = useDispatch();
-  const [triggerSignUp, result] = useSignUpMutation();
   const image = {
     uri: "https://res.cloudinary.com/dsdmjhkms/image/upload/v1705697788/backgroundLogin_keiwxy.jpg",
   };
 
   const onSubmit = () => {
-    triggerSignUp({ email, password });
+    triggerLogin({ email, password });
   };
 
   useEffect(() => {
@@ -39,25 +38,20 @@ const SignUpScreen = ({ navigation }) => {
           <Text style={styles.headerTitle}>Bienvenido a</Text>
           <Text style={styles.headerNameShop}>Deco Home</Text>
         </View>
-        <Text style={styles.titleAccount}>Crea una cuenta</Text>
+        <Text style={styles.titleAccount}>Iniciar Sesión</Text>
         <Input label="Email" onChange={setEmail} />
         <Input label="Contraseña" onChange={setPassword} isSecuryEntry={true} />
-        <Input
-          label="Repetir contraseña"
-          onChange={setConfirmPassword}
-          isSecuryEntry={true}
-        />
-        <TouchableOpacity style={styles.btnSignUp} onPress={onSubmit}>
-          <Text style={styles.textBtnSignUp}>Registrarme</Text>
+        <TouchableOpacity style={styles.btnLogin} onPress={onSubmit}>
+          <Text style={styles.textBtnLogin}>Ingresar</Text>
         </TouchableOpacity>
         <View style={styles.containerText}>
-          <Text style={styles.subtitle}>¿Ya tienes una cuenta?</Text>
+          <Text style={styles.subtitle}>¿Aún no tienes una cuenta?</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Login");
+              navigation.navigate("SignUp");
             }}
           >
-            <Text style={styles.linkLogin}>Iniciar Sesión</Text>
+            <Text style={styles.linkLogin}>Regístrate</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -65,7 +59,7 @@ const SignUpScreen = ({ navigation }) => {
   );
 };
 
-export default SignUpScreen;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   singUpContainer: {
@@ -110,7 +104,7 @@ const styles = StyleSheet.create({
     fontFamily: "Outfit-SemiBold",
     fontSize: 20,
   },
-  btnSignUp: {
+  btnLogin: {
     backgroundColor: colors.main,
     padding: 10,
     borderRadius: 10,
@@ -121,7 +115,7 @@ const styles = StyleSheet.create({
     width: "80%",
     alignItems: "center",
   },
-  textBtnSignUp: {
+  textBtnLogin: {
     fontFamily: "Outfit-Bold",
     fontSize: 16,
   },
