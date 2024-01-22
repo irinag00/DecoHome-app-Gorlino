@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
 } from "react-native";
 import Input from "../components/Input";
 import { colors } from "../global/colors";
@@ -11,11 +12,15 @@ import { useState, useEffect } from "react";
 import { useSignUpMutation } from "../services/authServices";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/authSlice";
+import { signupSchema } from "../validations/signupSchema";
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const dispach = useDispatch();
   const [triggerSignUp, result] = useSignUpMutation();
   const image = {
@@ -23,7 +28,37 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   const onSubmit = () => {
-    triggerSignUp({ email, password });
+    setEmailError("");
+    setPasswordError("");
+    setConfirmPasswordError("");
+    try {
+      signupSchema.validateSync(
+        { email, password, confirmPassword },
+        { abortEarly: false }
+      );
+      triggerSignUp({ email, password });
+    } catch (error) {
+      // console.log(error.errors);
+      error.errors.map((e) => {
+        const customError = Object.values(e)[0];
+        switch (Object.keys(e)[0]) {
+          case "empty_email":
+            setEmailError(customError);
+          case "invalid_email":
+            setEmailError(customError);
+          case "empty_password":
+            setPasswordError(customError);
+          case "invalid_password":
+            setPasswordError(customError);
+          case "empty_confirm_password":
+            setConfirmPasswordError(customError);
+          case "invalid_match_password":
+            setConfirmPasswordError(customError);
+          default:
+            break;
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -33,19 +68,25 @@ const SignUpScreen = ({ navigation }) => {
   }, [result]);
 
   return (
-    <View style={styles.singUpContainer}>
+    <KeyboardAvoidingView style={styles.singUpContainer} behavior="height">
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.containerNameShop}>
           <Text style={styles.headerTitle}>Bienvenido a</Text>
           <Text style={styles.headerNameShop}>Deco Home</Text>
         </View>
         <Text style={styles.titleAccount}>Crea una cuenta</Text>
-        <Input label="Email" onChange={setEmail} />
-        <Input label="Contraseña" onChange={setPassword} isSecuryEntry={true} />
+        <Input label="Email" onChange={setEmail} error={emailError} />
+        <Input
+          label="Contraseña"
+          onChange={setPassword}
+          isSecuryEntry={true}
+          error={passwordError}
+        />
         <Input
           label="Repetir contraseña"
           onChange={setConfirmPassword}
           isSecuryEntry={true}
+          error={confirmPasswordError}
         />
         <TouchableOpacity style={styles.btnSignUp} onPress={onSubmit}>
           <Text style={styles.textBtnSignUp}>Registrarme</Text>
@@ -61,7 +102,7 @@ const SignUpScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -1,5 +1,6 @@
 import {
   ImageBackground,
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -23,6 +24,7 @@ const LoginScreen = ({ navigation }) => {
 
   const onSubmit = () => {
     triggerLogin({ email, password });
+    console.log(result);
   };
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
   }, [result]);
 
   return (
-    <View style={styles.singUpContainer}>
+    <KeyboardAvoidingView style={styles.singUpContainer} behavior="height">
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.containerNameShop}>
           <Text style={styles.headerTitle}>Bienvenido a</Text>
@@ -55,7 +57,7 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

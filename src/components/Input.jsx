@@ -46,5 +46,6 @@ const styles = StyleSheet.create({
   error: {
     padding: 10,
     color: "#FF0000",
+    fontFamily: "Outfit-SemiBold",
   },
 });
