@@ -1,11 +1,16 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ShopNavigator from "./ShopNavigator";
 import CartNavigator from "./CartNavigator";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  MaterialIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
 import { colors } from "../global/colors";
 import OrdersNavigator from "./OrdersNavigator";
 import { useSelector } from "react-redux";
 import { StyleSheet, Text, View } from "react-native";
+import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
@@ -56,6 +61,21 @@ const TabNavigator = () => {
                   <Text style={styles.badgeText}>{cartItemCount}</Text>
                 </View>
               )}
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ProfileStack"
+        component={ProfileNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <FontAwesome
+                name="user-circle-o"
+                size={24}
+                color={focused ? colors.main : colors.gray}
+              />
             </View>
           ),
         }}
