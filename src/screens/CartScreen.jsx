@@ -11,8 +11,9 @@ import CartItem from "../components/CartItem";
 import { colors } from "../global/colors";
 import { useSelector } from "react-redux";
 import { usePostOrderMutation } from "../services/shopServices";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const CartScreen = () => {
+const CartScreen = ({ navigation }) => {
   const cartProducts = useSelector((state) => state.cartReducer.productsCart);
   const total = useSelector((state) => state.cartReducer.total);
   const [triggerPost, result] = usePostOrderMutation();
@@ -25,20 +26,47 @@ const CartScreen = () => {
 
   return (
     <View style={styles.cartContainer}>
-      <FlatList
-        data={cartProducts}
-        renderItem={renderCartItem}
-        keyExtractor={(item) => item.id}
-      ></FlatList>
-      <View style={styles.totalPriceContainer}>
-        <Text style={styles.totalPrice}> Total </Text>
-        <Text style={styles.totalPrice}> ${total}</Text>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <TouchableOpacity style={styles.confirmButton} onPress={confirmCart}>
-          <Text style={styles.textConfirm}>Confirmar compra</Text>
-        </TouchableOpacity>
-      </View>
+      {total != 0 ? (
+        <>
+          <FlatList
+            data={cartProducts}
+            renderItem={renderCartItem}
+            keyExtractor={(item) => item.id}
+          ></FlatList>
+          <View style={styles.totalPriceContainer}>
+            <Text style={styles.totalPrice}> Total </Text>
+            <Text style={styles.totalPrice}> ${total}</Text>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={confirmCart}
+            >
+              <Text style={styles.textConfirm}>Confirmar compra</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      ) : (
+        <View style={styles.cartEmptyContainer}>
+          <MaterialCommunityIcons
+            name="shopping-search"
+            size={180}
+            color="gray"
+          />
+          <Text style={styles.textCartEmpty}>
+            ¡Empieza un carrito de compras!
+          </Text>
+          <Text style={styles.textCartEmptySubtitle}>
+            Suma productos y disfruta.
+          </Text>
+          <TouchableOpacity
+            style={styles.cartButtonEmpty}
+            onPress={() => navigation.navigate("Categories")}
+          >
+            <Text style={styles.textConfirm}>Descubrir productos</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
@@ -49,6 +77,11 @@ const styles = StyleSheet.create({
   cartContainer: {
     flex: 1,
     marginTop: 10,
+  },
+  cartEmptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   totalPriceContainer: {
     flexDirection: "row",
@@ -76,6 +109,28 @@ const styles = StyleSheet.create({
   textConfirm: {
     fontFamily: "Outfit-Bold",
     fontSize: 16,
-    color: "#fff",
+    color: colors.white,
+  },
+  textCartEmpty: {
+    fontFamily: "Outfit-Bold",
+    marginTop: 15,
+    marginBottom: 5,
+    fontSize: 18,
+  },
+  textCartEmptySubtitle: {
+    fontFamily: "Outfit-Regular",
+    marginBottom: 30,
+    fontSize: 14,
+  },
+  cartButtonEmpty: {
+    padding: 5,
+    borderRadius: 10,
+    marginTop: 5,
+    marginBottom: 10,
+    borderRadius: 18,
+    paddingVertical: 13,
+    width: "50%",
+    alignItems: "center",
+    backgroundColor: colors.main,
   },
 });

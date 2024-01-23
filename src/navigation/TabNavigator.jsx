@@ -9,12 +9,13 @@ import {
 import { colors } from "../global/colors";
 import OrdersNavigator from "./OrdersNavigator";
 import { useSelector } from "react-redux";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   const cartItemCount = useSelector((state) => state.cartReducer.cartItemCount);
+  const image = useSelector((state) => state.authReducer.profilePicture);
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false, tabBarShowLabel: false }}
@@ -71,11 +72,22 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
-              <FontAwesome
-                name="user-circle-o"
-                size={24}
-                color={focused ? colors.main : colors.gray}
-              />
+              {image ? (
+                <Image
+                  source={{ uri: image }}
+                  style={{
+                    ...styles.profilePicture,
+                    borderColor: focused ? colors.main : null,
+                  }}
+                  resizeMode="contain"
+                />
+              ) : (
+                <FontAwesome
+                  name="user-circle-o"
+                  size={24}
+                  color={focused ? colors.main : colors.gray}
+                />
+              )}
             </View>
           ),
         }}
@@ -102,6 +114,13 @@ const styles = StyleSheet.create({
     color: colors.lightGreen,
     fontSize: 12,
     fontWeight: "bold",
+  },
+  profilePicture: {
+    width: 30,
+    height: 30,
+    borderRadius: 25,
+    backgroundColor: "#E8E8E8",
+    borderWidth: 2,
   },
 });
 

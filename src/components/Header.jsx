@@ -5,10 +5,14 @@ import {
   Pressable,
   Platform,
   StatusBar,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import { colors } from "../global/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 const Header = ({ title, navigation }) => {
+  const image = useSelector((state) => state.authReducer.profilePicture);
   return (
     <View
       style={{
@@ -18,9 +22,26 @@ const Header = ({ title, navigation }) => {
       }}
     >
       {title === "Categories" ? (
-        <View>
-          <Text style={styles.headerTitle}>Bienvenido a</Text>
-          <Text style={styles.headerNameShop}>Deco Home</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View>
+            <Text style={styles.headerTitle}>Bienvenido a</Text>
+            <Text style={styles.headerNameShop}>Deco Home</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+            {image ? (
+              <Image
+                source={{ uri: image }}
+                style={styles.profilePicture}
+                resizeMode="contain"
+              />
+            ) : (
+              <Image
+                source={require("../../assets/img/user.png")}
+                style={styles.profilePicture}
+                resizeMode="contain"
+              />
+            )}
+          </TouchableOpacity>
         </View>
       ) : (
         <View style={styles.buttonIcon}>
@@ -66,5 +87,14 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "Outfit-Bold",
     marginBottom: 20,
+  },
+  profilePicture: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginTop: 45,
+    backgroundColor: "#E8E8E8",
+    position: "absolute",
+    left: 100,
   },
 });
