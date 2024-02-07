@@ -22,6 +22,18 @@ const ImageSelectorScreen = ({ navigation }) => {
     return true;
   };
 
+  const verifyGalleryPermissions = async () => {
+    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!granted) {
+      const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        return false;
+      }
+    }
+    console.log("Permisos otorgados");
+    return true;
+  };
+
   const pickImage = async () => {
     const isCameraOk = await verifyCameraPermissions();
     if (isCameraOk) {
@@ -42,6 +54,26 @@ const ImageSelectorScreen = ({ navigation }) => {
     }
   };
 
+  const pickImageFromGallery = async () => {
+    const isGalleryOk = await verifyGalleryPermissions();
+    if (isGalleryOk) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [1, 1],
+        base64: true,
+        quality: 0.2,
+      });
+      if (!result.canceled) {
+        setImage(`data:image/jpeg;base64,${result.base64}`);
+      }
+    } else {
+      console.log(
+        "No se han otorgado los permisos necesarios para acceder a la galería."
+      );
+    }
+  };
+
   const confirmImage = () => {
     dispatch(setProfilePicture(image));
     triggerSaveProfilePicture({ image, localId });
@@ -58,9 +90,9 @@ const ImageSelectorScreen = ({ navigation }) => {
             resizeMode="cover"
           />
           <View style={styles.btnContainer}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={pickImageFromGallery}>
               <Text style={{ ...styles.btnText, ...styles.btnTextChoose }}>
-                Elegir otra
+                Abrir la galería
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -79,9 +111,22 @@ const ImageSelectorScreen = ({ navigation }) => {
             color="#ccc"
             style={styles.iconPhotography}
           />
-          <TouchableOpacity style={styles.btnAdd} onPress={pickImage}>
-            <Text style={styles.btnText}>Abrir cámara</Text>
-          </TouchableOpacity>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity
+              style={{ ...styles.btnAdd, ...styles.btn }}
+              onPress={pickImage}
+            >
+              <Text style={{ ...styles.btnText, ...styles.btnTextChoose }}>
+                Abrir cámara
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btnAdd}
+              onPress={pickImageFromGallery}
+            >
+              <Text style={styles.btnText}>Abrir galería</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>
@@ -119,8 +164,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     borderRadius: 18,
-    paddingVertical: 18,
-    width: "60%",
+    paddingVertical: 12,
+    width: "40%",
     alignItems: "center",
   },
   btnText: {

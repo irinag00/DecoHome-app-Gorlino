@@ -11,10 +11,10 @@ import {
 import { useGetProductsQuery } from "../services/shopServices";
 import { useEffect, useState } from "react";
 import { colors } from "../global/colors";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import { useNavigation } from "@react-navigation/native";
+import Carousel from "../components/Carousel";
 
 const ProductDetailScreen = ({ route }) => {
   const [productSelected, setProductSelected] = useState({});
@@ -42,50 +42,58 @@ const ProductDetailScreen = ({ route }) => {
     navigation.navigate("CartStack");
   };
 
+  const renderItem = ({ item }) => {
+    return <Image source={{ uri: item }} style={styles.carouselImage} />;
+  };
+
   return (
     <>
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <ScrollView>
-          <View style={styles.container}>
-            <View style={styles.containerDetail}>
-              <View style={styles.containerDetailImage}>
-                <Image
-                  style={styles.productImage}
-                  source={{ uri: productSelected.thumbnail }}
-                />
-              </View>
-              <View style={styles.rowTitleAndPrice}>
-                <Text style={styles.productTitle}>{productSelected.title}</Text>
-                <View style={styles.priceTag}>
-                  <Text style={styles.priceProduct}>
-                    $ {productSelected.price}
-                  </Text>
-                </View>
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <Text style={{ fontSize: 18, fontFamily: "Outfit-Bold" }}>
-                  Descripción
-                </Text>
-                <Text style={styles.productDescription}>
-                  {productSelected.description}
-                </Text>
-              </View>
-              <TouchableOpacity style={styles.buttonBuy} onPress={onAddToCart}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: colors.white,
-                    fontFamily: "Outfit-Bold",
-                  }}
-                >
-                  Añadir al carrito
-                </Text>
-              </TouchableOpacity>
+        <View style={styles.container}>
+          <View style={styles.containerDetail}>
+            <View style={styles.containerDetailImage}>
+              {/* Carousel de imágenes */}
+              <Carousel
+                style={styles.productImage}
+                images={productSelected.images}
+              />
             </View>
+
+            <View style={styles.rowTitleAndPrice}>
+              <Text style={styles.productTitle}>{productSelected.title}</Text>
+              <View style={styles.priceTag}>
+                <Text style={styles.priceProduct}>
+                  $ {productSelected.price}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 10,
+              }}
+            >
+              <Text style={{ fontSize: 18, fontFamily: "Outfit-Bold" }}>
+                Descripción
+              </Text>
+              <Text style={styles.productDescription}>
+                {productSelected.description}
+              </Text>
+            </View>
+            <TouchableOpacity style={styles.buttonBuy} onPress={onAddToCart}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: colors.white,
+                  fontFamily: "Outfit-Bold",
+                }}
+              >
+                Añadir al carrito
+              </Text>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
+        </View>
       )}
     </>
   );
@@ -106,18 +114,13 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 56,
     alignItems: "center",
     paddingHorizontal: 16,
+    justifyContent: "space-between",
   },
   containerDetailImage: {
-    height: 300,
-    width: 300,
+    height: 350,
+    width: 350,
     position: "absolute",
-    top: -150,
-  },
-  productImage: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "contain",
-    borderRadius: 25,
+    top: -130,
   },
   productTitle: {
     fontSize: 24,
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   rowTitleAndPrice: {
-    marginTop: 180,
+    marginTop: 260,
     marginLeft: 20,
     flexDirection: "row",
     justifyContent: "space-between",

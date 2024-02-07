@@ -17,9 +17,6 @@ const ProductsByCategoriesScreen = ({ navigation, route }) => {
   const [search, setSearch] = useState("");
 
   const category = useSelector((state) => state.shopReducer.categorySelected);
-  // const productsFilterByCategory = useSelector(
-  //   (state) => state.shopReducer.productsFilteredByCategory
-  // );
 
   const {
     data: productsByCategoryData,
@@ -35,7 +32,7 @@ const ProductsByCategoriesScreen = ({ navigation, route }) => {
       );
       setProductsByCategory(productsFiltered);
     }
-  }, [category, search]);
+  }, [category, search, productsByCategoryData, productsByCategoryLoading]);
 
   const renderProductItem = ({ item }) => (
     <ProductItem product={item} navigation={navigation} />
