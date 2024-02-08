@@ -27,7 +27,7 @@ const Header = ({ title, navigation }) => {
             <Text style={styles.headerTitle}>Bienvenido a</Text>
             <Text style={styles.headerNameShop}>Deco Home</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+          <View>
             {image ? (
               <Image
                 source={{ uri: image }}
@@ -41,7 +41,7 @@ const Header = ({ title, navigation }) => {
                 resizeMode="contain"
               />
             )}
-          </TouchableOpacity>
+          </View>
         </View>
       ) : (
         <View style={styles.buttonIcon}>

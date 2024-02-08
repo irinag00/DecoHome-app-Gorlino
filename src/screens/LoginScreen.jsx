@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useLoginMutation } from "../services/authServices";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/authSlice";
+import { insertSession } from "../db";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -24,12 +25,21 @@ const LoginScreen = ({ navigation }) => {
 
   const onSubmit = () => {
     triggerLogin({ email, password });
-    console.log(result);
+    //el usuario: irinagorlino@gmail.com y contraseña:hola123 registrado
   };
 
   useEffect(() => {
-    if (result.data) {
+    if (result?.data) {
       dispach(setUser(result.data));
+      insertSession({
+        email: result.data.email,
+        localId: result.data.localId,
+        token: result.data.idToken,
+      })
+        .then((result) =>
+          console.log("Usuario ingresado correctamente: ", result)
+        )
+        .catch((error) => console.log("Error al ingresar el usuario:", error));
     }
   }, [result]);
 

@@ -1,14 +1,32 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View, Image } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import user_data from "../data/user_data.json";
 import { colors } from "../global/colors";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { logOut } from "../features/authSlice";
+import { deleteSession } from "../db";
 
 const ProfileScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const image = useSelector((state) => state.authReducer.profilePicture);
+  const email = useSelector((state) => state.authReducer.user);
+  const localId = useSelector((state) => state.authReducer.localId);
+
+  const onLogOut = () => {
+    dispatch(logOut());
+    const deletedSession = deleteSession(localId);
+    console.log("Sesión eliminada: ", deletedSession);
+  };
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Text style={styles.title}>Mi perfil</Text>
       <View style={styles.container}>
         <View>
@@ -47,6 +65,13 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.userData}>Ciudad: {user_data.city}</Text>
         </View>
       </View>
+      <View style={{ alignItems: "center" }}>
+        {email && (
+          <TouchableOpacity onPress={onLogOut} style={styles.logOutButton}>
+            <Text style={styles.btnTextLogout}>Cerrar Sesión</Text>
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 };
@@ -55,7 +80,6 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     flexDirection: "row",
     margin: 20,
     gap: 20,
@@ -106,5 +130,23 @@ const styles = StyleSheet.create({
     color: colors.lightGreen,
     fontSize: 12,
     fontWeight: "bold",
+  },
+  logOutButton: {
+    backgroundColor: colors.white,
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    marginBottom: 10,
+    borderRadius: 18,
+    paddingVertical: 10,
+    width: "70%",
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: colors.main,
+  },
+  btnTextLogout: {
+    color: colors.main,
+    fontFamily: "Outfit-Bold",
+    fontSize: 16,
   },
 });
