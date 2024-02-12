@@ -51,49 +51,51 @@ const ProductDetailScreen = ({ route }) => {
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <View style={styles.container}>
-          <View style={styles.containerDetail}>
-            <View style={styles.containerDetailImage}>
-              {/* Carousel de imágenes */}
-              <Carousel
-                style={styles.productImage}
-                images={productSelected.images}
-              />
-            </View>
-
-            <View style={styles.rowTitleAndPrice}>
-              <Text style={styles.productTitle}>{productSelected.title}</Text>
-              <View style={styles.priceTag}>
-                <Text style={styles.priceProduct}>
-                  $ {productSelected.price}
-                </Text>
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.containerDetail}>
+              <View style={styles.containerDetailImage}>
+                {/* Carousel de imágenes */}
+                <Carousel
+                  style={styles.productImage}
+                  images={productSelected.images}
+                />
               </View>
-            </View>
-            <View
-              style={{
-                marginTop: 10,
-              }}
-            >
-              <Text style={{ fontSize: 18, fontFamily: "Outfit-Bold" }}>
-                Descripción
-              </Text>
-              <Text style={styles.productDescription}>
-                {productSelected.description}
-              </Text>
-            </View>
-            <TouchableOpacity style={styles.buttonBuy} onPress={onAddToCart}>
-              <Text
+
+              <View style={styles.rowTitleAndPrice}>
+                <Text style={styles.productTitle}>{productSelected.title}</Text>
+                <View style={styles.priceTag}>
+                  <Text style={styles.priceProduct}>
+                    $ {productSelected.price}
+                  </Text>
+                </View>
+              </View>
+              <View
                 style={{
-                  fontSize: 18,
-                  color: colors.white,
-                  fontFamily: "Outfit-Bold",
+                  marginTop: 10,
                 }}
               >
-                Añadir al carrito
-              </Text>
-            </TouchableOpacity>
+                <Text style={{ fontSize: 18, fontFamily: "Outfit-Bold" }}>
+                  Descripción
+                </Text>
+                <Text style={styles.productDescription}>
+                  {productSelected.description}
+                </Text>
+              </View>
+              <TouchableOpacity style={styles.buttonBuy} onPress={onAddToCart}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: colors.white,
+                    fontFamily: "Outfit-Bold",
+                  }}
+                >
+                  Añadir al carrito
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       )}
     </>
   );

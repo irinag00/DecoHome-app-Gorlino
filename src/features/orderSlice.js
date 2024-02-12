@@ -13,6 +13,7 @@ const ordersSlice = createSlice({
       if (!orderFind) {
         state.ordersList.push(action.payload);
       } else {
+        console.error("Orden existente");
         return;
       }
     },

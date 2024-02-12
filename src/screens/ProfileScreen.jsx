@@ -10,7 +10,7 @@ import {
 import user_data from "../data/user_data.json";
 import { colors } from "../global/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, Entypo } from "@expo/vector-icons";
 import { logOut } from "../features/authSlice";
 import { deleteSession } from "../db";
 
@@ -69,6 +69,7 @@ const ProfileScreen = ({ navigation }) => {
         {email && (
           <TouchableOpacity onPress={onLogOut} style={styles.logOutButton}>
             <Text style={styles.btnTextLogout}>Cerrar Sesión</Text>
+            <Entypo name="log-out" size={24} color={colors.main} />
           </TouchableOpacity>
         )}
       </View>
@@ -143,10 +144,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 3,
     borderColor: colors.main,
+    flexDirection: "row",
+    justifyContent: "center",
   },
   btnTextLogout: {
     color: colors.main,
     fontFamily: "Outfit-Bold",
     fontSize: 16,
+    marginRight: 5,
   },
 });

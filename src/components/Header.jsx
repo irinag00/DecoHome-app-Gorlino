@@ -46,11 +46,22 @@ const Header = ({ title, navigation }) => {
       ) : (
         <View style={styles.buttonIcon}>
           {title != "SignUp" && title != "Login" ? (
-            <Pressable onPress={navigation.goBack}>
+            <Pressable
+              onPress={navigation.goBack}
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
               {title === "DetailProduct" ? (
                 <Ionicons name="arrow-back-sharp" size={28} color="white" />
               ) : (
-                <Ionicons name="arrow-back-sharp" size={28} color="black" />
+                <>
+                  <Ionicons name="arrow-back-sharp" size={28} color="black" />
+                  {title === "Orders" ? (
+                    <Text style={styles.textOrderCart}>Mis compras</Text>
+                  ) : null}
+                  {title === "Cart" ? (
+                    <Text style={styles.textOrderCart}>Mi carrito</Text>
+                  ) : null}
+                </>
               )}
             </Pressable>
           ) : null}
@@ -96,5 +107,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#E8E8E8",
     position: "absolute",
     left: 100,
+  },
+  textOrderCart: {
+    marginLeft: 10,
+    fontSize: 18,
+    fontFamily: "Outfit-Bold",
   },
 });

@@ -13,7 +13,10 @@ const OrderItem = ({ order }) => {
         {order.cartProducts.map((product, index) => (
           <View
             key={index}
-            style={{ flexDirection: "row", alignItems: "center" }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
           >
             <Image
               source={{ uri: product.thumbnail }}
@@ -27,7 +30,6 @@ const OrderItem = ({ order }) => {
             </View>
           </View>
         ))}
-        {/* <Text style={styles.total}>Total: ${order.total}</Text> */}
       </View>
       <TouchableOpacity style={styles.searchIcon} onPress={null}>
         <Feather name="search" size={24} color={colors.main} />

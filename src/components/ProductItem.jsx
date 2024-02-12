@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     marginHorizontal: 10,
     flex: 1,
+    justifyContent: "space-around",
   },
   containerImage: {
     alignItems: "center",
@@ -86,15 +87,16 @@ const styles = StyleSheet.create({
   },
   addToCartBtn: {
     marginTop: 5,
-    height: 30,
+    height: 40,
     borderRadius: 20,
-    backgroundColor: colors.lightGreen,
+    padding: 8,
+    backgroundColor: colors.main,
     justifyContent: "center",
     alignItems: "center",
   },
   addToCartText: {
     fontFamily: "Outfit-Bold",
-    color: colors.black,
-    fontSize: 12,
+    color: colors.white,
+    fontSize: 14,
   },
 });

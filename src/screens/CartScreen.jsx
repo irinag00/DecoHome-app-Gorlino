@@ -6,22 +6,14 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-// import cart_data from "../data/cart_data.json";
 import CartItem from "../components/CartItem";
 import { colors } from "../global/colors";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useGetOrdersQuery,
-  usePostOrderMutation,
-} from "../services/shopServices";
+import { usePostOrderMutation } from "../services/shopServices";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { clearCart } from "../features/cartSlice";
-import {
-  addOrder,
-  setError,
-  setLoading,
-  setOrders,
-} from "../features/orderSlice";
+import { addOrder } from "../features/orderSlice";
+import ModalSuccessBuy from "../components/ModalSuccessBuy";
 
 const CartScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -30,6 +22,7 @@ const CartScreen = ({ navigation }) => {
   const updatedAt = useSelector((state) => state.cartReducer.updatedAt);
   const user = useSelector((state) => state.authReducer.user);
   const [triggerPost, result] = usePostOrderMutation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const confirmCart = () => {
     const newOrder = {
@@ -42,12 +35,16 @@ const CartScreen = ({ navigation }) => {
     dispatch(addOrder(newOrder));
     triggerPost(newOrder)
       .then((result) => {
-        console.log("Order Result:", result);
         dispatch(clearCart());
+        navigation.navigate("Orders");
+        setModalVisible(true);
       })
       .catch((error) => {
         console.error("Error posting order:", error);
       });
+  };
+  const closeModal = () => {
+    setModalVisible(false);
   };
   const renderCartItem = ({ item }) => <CartItem item={item} />;
 
@@ -94,6 +91,7 @@ const CartScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       )}
+      <ModalSuccessBuy visible={modalVisible} onClose={closeModal} />
     </View>
   );
 };
