@@ -9,19 +9,46 @@ import React, { useEffect, useState } from "react";
 // import cart_data from "../data/cart_data.json";
 import CartItem from "../components/CartItem";
 import { colors } from "../global/colors";
-import { useSelector } from "react-redux";
-import { usePostOrderMutation } from "../services/shopServices";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useGetOrdersQuery,
+  usePostOrderMutation,
+} from "../services/shopServices";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { clearCart } from "../features/cartSlice";
+import {
+  addOrder,
+  setError,
+  setLoading,
+  setOrders,
+} from "../features/orderSlice";
 
 const CartScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const cartProducts = useSelector((state) => state.cartReducer.productsCart);
   const total = useSelector((state) => state.cartReducer.total);
+  const updatedAt = useSelector((state) => state.cartReducer.updatedAt);
+  const user = useSelector((state) => state.authReducer.user);
   const [triggerPost, result] = usePostOrderMutation();
 
   const confirmCart = () => {
-    triggerPost({ total, cartProducts, user: "LoggedUsed" });
+    const newOrder = {
+      total,
+      cartProducts,
+      user,
+      updatedAt,
+      orderId: Math.ceil(Math.random(1, 10) * 1000),
+    };
+    dispatch(addOrder(newOrder));
+    triggerPost(newOrder)
+      .then((result) => {
+        console.log("Order Result:", result);
+        dispatch(clearCart());
+      })
+      .catch((error) => {
+        console.error("Error posting order:", error);
+      });
   };
-
   const renderCartItem = ({ item }) => <CartItem item={item} />;
 
   return (

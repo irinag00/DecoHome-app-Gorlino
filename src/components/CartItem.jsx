@@ -12,15 +12,18 @@ import { Feather } from "@expo/vector-icons";
 import { colors } from "../global/colors";
 import { AntDesign } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { addToCart, removeToCart } from "../features/cartSlice";
+import { addToCart, removeProduct, removeToCart } from "../features/cartSlice";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
   const onAddProduct = () => {
     dispatch(addToCart({ ...item, quantity: 1 }));
   };
-  const onRemoveProduct = () => {
+  const onRemoveQuantityProduct = () => {
     dispatch(removeToCart({ ...item, quantity: 1 }));
+  };
+  const onRemoveProduct = () => {
+    dispatch(removeProduct({ id: item.id }));
   };
   return (
     <CardProduct style={styles.cartItemContainer}>
@@ -37,7 +40,7 @@ const CartItem = ({ item }) => {
         </View>
       </View>
       <View style={styles.trashIconContainer}>
-        <TouchableOpacity onPress={null}>
+        <TouchableOpacity onPress={onRemoveProduct}>
           <Feather name="trash-2" size={18} color="black" />
         </TouchableOpacity>
       </View>
@@ -45,7 +48,7 @@ const CartItem = ({ item }) => {
         <Text style={styles.cartQuantity}>{item.quantity}</Text>
         <View style={styles.actionBtn}>
           {item.quantity > 1 ? (
-            <TouchableOpacity onPress={onRemoveProduct}>
+            <TouchableOpacity onPress={onRemoveQuantityProduct}>
               <AntDesign name="minus" size={20} color="white" />
             </TouchableOpacity>
           ) : (

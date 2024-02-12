@@ -4,8 +4,10 @@ import AuthNavigator from "./AuthNavigator";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useGetProfilePictureQuery } from "../services/shopServices";
+import { useGetOrdersQuery } from "../services/shopServices";
 import { setProfilePicture, setUser } from "../features/authSlice";
 import { fetchSession } from "../db";
+import { addOrder, setOrders } from "../features/orderSlice";
 
 const MainNavigator = () => {
   const user = useSelector((state) => state.authReducer.user);
@@ -13,11 +15,19 @@ const MainNavigator = () => {
   const dispatch = useDispatch();
 
   const { data, isLoading, error } = useGetProfilePictureQuery(localId);
+  // const {
+  //   data: ordersData,
+  //   isLoading: ordersLoading,
+  //   error: ordersError,
+  // } = useGetOrdersQuery();
 
   useEffect(() => {
     if (data) {
       dispatch(setProfilePicture(data.image));
     }
+    // if (ordersData) {
+    //   dispatch(addOrder(ordersData));
+    // }
   }, [data]);
 
   useEffect(() => {

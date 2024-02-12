@@ -4,7 +4,7 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState: {
     user: "UserLoged",
-    updatedAt: Date.now().toLocaleString(),
+    updatedAt: new Date().toLocaleString(),
     total: 0,
     productsCart: [],
     cartItemCount: 0,
@@ -25,7 +25,7 @@ export const cartSlice = createSlice({
         state = {
           ...state,
           total,
-          updatedAt: Date.now().toLocaleString(),
+          updatedAt: new Date().toLocaleString(),
         };
       } else {
         const productsUpdated = state.productsCart.map((item) => {
@@ -45,7 +45,7 @@ export const cartSlice = createSlice({
           ...state,
           productsCart: productsUpdated,
           total,
-          updatedAt: Date.now().toLocaleString(),
+          updatedAt: new Date().toLocaleString(),
         };
       }
     },
@@ -67,10 +67,30 @@ export const cartSlice = createSlice({
         ...state,
         productsCart: productsUpdated,
         total,
-        updatedAt: Date.now().toLocaleString(),
+        updatedAt: new Date().toLocaleString(),
       };
+    },
+    clearCart: (state) => {
+      state.productsCart = [];
+      state.total = 0;
+      state.cartItemCount = 0;
+    },
+    removeProduct: (state, action) => {
+      const index = state.productsCart.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (index !== -1) {
+        const deletedProduct = state.productsCart[index];
+        state.productsCart.splice(index, 1); //elimina el producto del array
+
+        //actualizo el total y el contador
+        state.total -= deletedProduct.price * deletedProduct.quantity;
+        state.cartItemCount -= deletedProduct.quantity;
+        state.updatedAt = new Date().toLocaleString();
+      }
     },
   },
 });
-export const { addToCart, removeToCart } = cartSlice.actions;
+export const { addToCart, removeToCart, clearCart, removeProduct } =
+  cartSlice.actions;
 export default cartSlice.reducer;

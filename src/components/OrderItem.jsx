@@ -4,14 +4,30 @@ import CardProduct from "./CardProduct";
 import { Feather } from "@expo/vector-icons";
 import { colors } from "../global/colors";
 
-const OrderItem = ({ order, total }) => {
+const OrderItem = ({ order }) => {
   return (
-    <CardProduct style={styles.cartItemContainer}>
+    <CardProduct style={styles.orderItemContainer}>
       <View>
-        <Text style={styles.createdAt}>
-          Creada el {new Date(order.createdAt).toLocaleString()}
-        </Text>
-        <Text style={styles.total}>Total: ${total}</Text>
+        <Text style={styles.textOrderBold}>Compra #{order.orderId}</Text>
+        <Text style={styles.textOrderRegular}>Fecha: {order.updatedAt}</Text>
+        {order.cartProducts.map((product, index) => (
+          <View
+            key={index}
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
+            <Image
+              source={{ uri: product.thumbnail }}
+              style={{ width: 50, height: 50, marginTop: 5 }}
+            />
+            <View style={styles.orderProductContainer}>
+              <Text style={styles.textOrderBold}>{product.title}</Text>
+              <Text style={styles.textOrderRegular}>
+                ${product.price} x {product.quantity}
+              </Text>
+            </View>
+          </View>
+        ))}
+        {/* <Text style={styles.total}>Total: ${order.total}</Text> */}
       </View>
       <TouchableOpacity style={styles.searchIcon} onPress={null}>
         <Feather name="search" size={24} color={colors.main} />
@@ -23,19 +39,25 @@ const OrderItem = ({ order, total }) => {
 export default OrderItem;
 
 const styles = StyleSheet.create({
-  cartItemContainer: {
+  orderItemContainer: {
     flexDirection: "row",
     alignItems: "center",
     padding: 20,
+    justifyContent: "space-between",
+    marginBottom: 15,
+    marginHorizontal: 15,
   },
   searchIcon: {
     marginLeft: "auto",
   },
-  createdAt: {
+  textOrderRegular: {
     fontFamily: "Outfit-Regular",
     marginBottom: 5,
   },
-  total: {
+  orderProductContainer: {
+    marginLeft: 10,
+  },
+  textOrderBold: {
     fontFamily: "Outfit-Bold",
     fontSize: 14,
   },
