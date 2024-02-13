@@ -20,8 +20,60 @@ Esta aplicación consta de una tienda e-commerce de productos de decoración par
 
 ## Instalación
 
-Para instalar y ejecutar este proyecto, sigue estos pasos: 
+Para instalar y ejecutar este proyecto, sigue estos pasos:
 
-1) Tener instalado Android Studio en tu computadora o Expo Go en tu dispositivo móvil para la ejecución de la App.
-2) ```bash npm install
+1. Tener instalado Android Studio en tu computadora o Expo Go en tu dispositivo móvil para la ejecución de la App.
+2. Clone el repositorio en la consola de su computadora con el siguiente información:
+
+```
+git clone https://github.com/irinag00/DecoHome-app-Gorlino.git
+```
+
+3. Instale las dependencias con
+
+```
 npm install
+```
+
+4. Ejecuta el siguiente comando para abrir la app
+
+```
+npx expo start
+```
+
+5. Por último, tienes la opción de escanear el código QR para abrir la app desde tu dispositivo móvil (con la aplicación de Expo Go) o también puedes apretar la letra `a ` para que se abra desde Android Studio.
+
+## Estructura de archivos
+
+```
+my-ecommerce/
+  |- expo/
+  |- node_modules/
+  |- src/                     # Carpeta principal para el código fuente de la aplicación
+  |   |- components/          # Componentes reutilizables de la aplicación
+  |   |- data/                # Información en json para pruebas
+  |   |- db/                  # Configuración de SQLite
+  |   |- features/            # Configuración de Redux (reducers, store)
+  |   |- firebase/            # Credenciales de la base de datos
+  |   |- global/              # Información global (colores)
+  |   |- navigation/          # Configuración de la navegación de la aplicación
+  |   |- screens/             # Pantallas
+  |   |- services/            # Servicios como la conexión a base de datos
+  |   |- store/               # Configuración de Redux Toolkit
+  |   |- validations/         # Configuración de validaciones para el registro
+  |- assets/                  # Imágenes
+  |- App.js                   # Configuración principal
+  |- app.json
+  |- babel.config.js
+  |- package.json
+  |- README.md
+```
+
+## Contribución
+
+¡Contribuciones son bienvenidas! Si quieres contribuir a este proyecto abre una solicitud de Pull request.
+
+## Contacto
+
+Para consultas o comentarios, me pueden contactar a dirección de email: [irinagorlino@gmail.com](irinagorlino@gmail.com)
+_¡Muchas gracias por ver mi proyecto!_
