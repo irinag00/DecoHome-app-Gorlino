@@ -1,5 +1,7 @@
 # Deco Home App
 
+<img src="../myecommerce/assets/img/banner.jpg" alt="LogoDecoHome">
+
 ## Descripción
 
 Proyecto final del curso de Desarrollo de Aplicaciones dictado por **CoderHouse**.
