@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  ScrollView,
+  SectionList,
+} from "react-native";
 import CategoryItem from "../components/CategoryItem";
 import ProductItem from "../components/ProductItem";
 import { useSelector } from "react-redux";
@@ -29,6 +37,11 @@ const CategoriesScreen = ({ navigation }) => {
   return (
     <>
       <View style={styles.container}>
+        <Image
+          source={require("../../assets/img/banner.jpg")}
+          style={styles.banner}
+          resizeMode="contain"
+        />
         <View>
           <FlatList
             horizontal
@@ -62,5 +75,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 22,
     fontFamily: "Outfit-Bold",
+  },
+  banner: {
+    width: "100%",
+    height: 100,
   },
 });
