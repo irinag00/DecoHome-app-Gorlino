@@ -1,6 +1,6 @@
 # Deco Home App
 
-<img src="../myecommerce/assets/img/banner.jpg" alt="LogoDecoHome">
+<img src="https://res.cloudinary.com/dsdmjhkms/image/upload/v1707852630/ipwqjrloyomxy8twuadq.jpg" alt="LogoDecoHome">
 
 ## Descripción
 
