@@ -15,13 +15,12 @@ import {
   useGetProductsQuery,
 } from "../services/shopServices";
 const CategoriesScreen = ({ navigation }) => {
-  // const categories = useSelector((state) => state.shopReducer.categories);
   const {
     data: categoriesData,
     isLoading: categoriesLoading,
     error: categoriesError,
   } = useGetCategoriesQuery();
-  // const products = useSelector((state) => state.shopReducer.products);
+
   const {
     data: productsData,
     isLoading: productsLoading,

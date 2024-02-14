@@ -22,8 +22,7 @@ const ProfileScreen = ({ navigation }) => {
 
   const onLogOut = () => {
     dispatch(logOut());
-    const deletedSession = deleteSession(localId);
-    console.log("Sesión eliminada: ", deletedSession);
+    deleteSession(localId);
   };
   return (
     <View style={{ flex: 1 }}>

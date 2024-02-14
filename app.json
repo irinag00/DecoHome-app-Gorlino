@@ -15,13 +15,16 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "icon": "./assets/icon.png",
+      "package": "com.irinag00.myecommerce"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "826306d2-77b8-4f71-8312-5c08980f9543"
+      }
     }
   }
 }

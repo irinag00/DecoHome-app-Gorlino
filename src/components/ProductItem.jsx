@@ -2,7 +2,6 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { colors } from "../global/colors";
 import { useDispatch } from "react-redux";
 import { setProductIdSelected } from "../features/shopSlice";
-import { useNavigation } from "@react-navigation/native";
 import { addToCart } from "../features/cartSlice";
 const ProductItem = ({ product, navigation }) => {
   const dispatch = useDispatch();

@@ -38,7 +38,6 @@ const SignUpScreen = ({ navigation }) => {
       );
       triggerSignUp({ email, password });
     } catch (error) {
-      // console.log(error.errors);
       error.errors.map((e) => {
         const customError = Object.values(e)[0];
         switch (Object.keys(e)[0]) {

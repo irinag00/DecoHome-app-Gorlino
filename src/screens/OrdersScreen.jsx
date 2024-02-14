@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import OrderItem from "../components/OrderItem";
-import orders_data from "../data/orders_data.json";
 import { useGetOrdersQuery } from "../services/shopServices";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
